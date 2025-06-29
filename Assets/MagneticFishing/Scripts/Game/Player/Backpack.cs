@@ -5,13 +5,14 @@ namespace MagneticFishing
 {
     public class Backpack : MonoBehaviour
     {
-        public int capacityBackpack;
+        public int capacityBackpack = 30;
         public List<Subject> listItems;
 
         public void Init(int capacityBackpack)
         {
             this.capacityBackpack = capacityBackpack;
             listItems = new List<Subject>(this.capacityBackpack);
+            EventBusGame.AddItemInInventory?.Invoke(listItems);
         }
 
         public void AddItamInBackpack(Subject item)
@@ -19,6 +20,7 @@ namespace MagneticFishing
             if (listItems.Count < capacityBackpack)
             {
                 listItems.Add(item);
+                EventBusGame.AddItemInInventory?.Invoke(listItems);
             }
         }
     }

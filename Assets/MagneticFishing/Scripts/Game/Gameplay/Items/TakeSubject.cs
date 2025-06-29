@@ -14,14 +14,18 @@ namespace MagneticFishing
         [Header("—сылки на скрипты")]
         [SerializeField] private LootGenerator lootGenerator;
         [SerializeField] private Backpack backpack;
+        [SerializeField, Tooltip("—сылка на скрипт с анимаци€ми панели")] private HandlerPanelAnims panelTake;
 
-        [SerializeField] private RectTransform panelTake;
         [SerializeField] private TextMeshProUGUI nameSubject;
         [SerializeField] private TextMeshProUGUI descriptionSubject;
         [SerializeField] private Image spriteSubject;
 
         private Subject selectedItem;
 
+        private void Start()
+        {
+            EventBusGame.ChangeUiCountSlots?.Invoke(backpack.listItems.Count, backpack.capacityBackpack);
+        }
         private void OnEnable()
         {
             buttonDrop.onClick.AddListener(ButtonDropItem);
@@ -46,7 +50,7 @@ namespace MagneticFishing
                     nameSubject.text = subject.descriptionOfItem.Name;
                     descriptionSubject.text = subject.descriptionOfItem.Description;
                     spriteSubject.sprite = subject.descriptionOfItem.SpriteSubject;
-                    panelTake.gameObject.SetActive(true);
+                    panelTake.TogglePanel(true);
                 }
             }
         }
@@ -55,18 +59,27 @@ namespace MagneticFishing
         {
             if (selectedItem != null)
                 Destroy(selectedItem.gameObject);
-            panelTake.gameObject.SetActive(false);
+            panelTake.TogglePanel(false);
+            GeneratorIdProp.ReleaseId(selectedItem.Id);
+            DeleteProp();
         }
 
         public void ButtonTakeItem()
         {
-            panelTake.gameObject.SetActive(false);
+            panelTake.TogglePanel(false);
             if (selectedItem == null)
             { return; }
 
             backpack.AddItamInBackpack(selectedItem);
             EventBusGame.ChangeUiCountSlots?.Invoke(backpack.listItems.Count, backpack.capacityBackpack);
             Destroy(selectedItem.gameObject);
+            DeleteProp();
+        }
+
+        public void DeleteProp()
+        {
+            if (!lootGenerator.DeleteItemFromArray())
+                EventBusGame.ClouseLootWindow?.Invoke();
         }
     }
 }

@@ -10,7 +10,6 @@ namespace MagneticFishing
         public T Load<T>(string key)
         {
             string path = BuildPath(key);
-            Debug.Log(path);
 
             if (!File.Exists(path))
             {
@@ -21,7 +20,6 @@ namespace MagneticFishing
             {
                 var json = fileStream.ReadToEnd();
                 var data = JsonUtility.FromJson<T>(json);
-                Debug.Log(data);
                 return data;
             }
         }
@@ -29,13 +27,11 @@ namespace MagneticFishing
         public void Save(string key, object data, Action<bool> callback = null)
         {
             string path = BuildPath(key);
-            Debug.Log(path);
             string json = JsonUtility.ToJson(data);
 
             using (var fileStream = new StreamWriter(path))
             {
                 fileStream.Write(json);
-                Debug.Log(json);
             }
 
             callback?.Invoke(true);

@@ -4,11 +4,13 @@ namespace MagneticFishing
 {
     public class ObjectAttractor : MonoBehaviour
     {
+        [Header("Ссылки на скрпты")]
         [SerializeField] private UiViewGame uiView;
         [SerializeField] private ScreenLoot screenLoot;
+        [SerializeField] private Energy energy;
+        [Header("Настройки")]
         [SerializeField] private Transform positionObjectAttractor;
         [SerializeField] private float speedAttractor;
-
         public Transform ottudovaPull { get; set; }
 
         private bool isButtonPressed;
@@ -47,6 +49,7 @@ namespace MagneticFishing
                 return;
             }
 
+            bool energyIsGone = energy.EnergyConsumption(energy.EnergyConsumptionAtTime * Time.deltaTime);
             ottudovaPull.position = Vector2.MoveTowards(ottudovaPull.position, positionObjectAttractor.position, speedAttractor * Time.deltaTime);
             uiView.SetDistanceText(positionObjectAttractor.position, ottudovaPull.position);
         }

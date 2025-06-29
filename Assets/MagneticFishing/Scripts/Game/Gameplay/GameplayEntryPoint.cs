@@ -28,7 +28,7 @@ namespace MagneticFishing
             dataSystem.Load<DataGame>();
 
             Backpack backpack = GameObject.FindFirstObjectByType<Backpack>();
-            backpack.Init(20); // load data
+            backpack.Init(30); // load data
         }
     }
 }

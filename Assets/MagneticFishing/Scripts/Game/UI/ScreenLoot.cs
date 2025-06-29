@@ -8,25 +8,33 @@ namespace MagneticFishing
         [Header("—ылки на скрипты")]
         [SerializeField] private ObjectAttractor objectAttractor;
         [SerializeField] private FishingMagnetic fishingMagnetic;
+        [SerializeField] private HandlerPanelAnims panelAnims;
 
         [Header("—сылки на компоненты")]
         [SerializeField] private Transform panelLoot;
 
+        private void OnEnable()
+        {
+            EventBusGame.ClouseLootWindow += SetDisactivePanel;
+        }
+
+        private void OnDisable()
+        {
+            EventBusGame.ClouseLootWindow -= SetDisactivePanel;
+        }
 
         public void SetActivePanel()
         {
             fishingMagnetic.enabled = false;
             objectAttractor.enabled = false;
-
-            panelLoot.gameObject.SetActive(true);
+            panelAnims.TogglePanel(true);
         }
 
 
         public void SetDisactivePanel()
         {
             fishingMagnetic.enabled = true;
-
-            panelLoot.gameObject.SetActive(false);
+            panelAnims.TogglePanel(false);
         }
     }
 }

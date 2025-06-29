@@ -80,7 +80,7 @@ namespace MagneticFishing
             yield return LoadScene(Scenes.BOOT);
             yield return LoadScene(Scenes.GAMEPLAY);
             SaveOrLoad();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
 
             var sceneEntryPoint = Object.FindFirstObjectByType<GameplayEntryPoint>();
             sceneEntryPoint.Run(screenLoadView);
@@ -102,7 +102,7 @@ namespace MagneticFishing
             yield return LoadScene(Scenes.MENU);
 
             SaveOrLoad();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
 
             var sceneEntryPoint = Object.FindFirstObjectByType<EntryPointMenu>();
             sceneEntryPoint.Run(screenLoadView);
