@@ -7,7 +7,7 @@ namespace MagneticFishing
     {
         [Header("—ылки на скрипты")]
         [SerializeField] private ObjectAttractor objectAttractor;
-        [SerializeField] private FishingMagnetic fishingMagnetic;
+        [SerializeField] private MagneticCaster fishingMagnetic;
         [SerializeField] private HandlerPanelAnims panelAnims;
 
         [Header("—сылки на компоненты")]
@@ -35,6 +35,7 @@ namespace MagneticFishing
         {
             fishingMagnetic.enabled = true;
             panelAnims.TogglePanel(false);
+            EventBusGame.EndAttraction?.Invoke();
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 namespace MagneticFishing
 {
     public class LootGenerator : MonoBehaviour
@@ -8,27 +8,56 @@ namespace MagneticFishing
         [SerializeField] private Transform panelSpawn;
         [SerializeField] private ushort minGenerateLoot = 0;
         [SerializeField] private ushort maxGenerateLoot = 4;
-
-        public GameObject[] AllLoot;
-        public RectTransform[] spawnPositions;
         [SerializeField] private bool[] spawnPositionsIsBusy;
+
+        public GameObject[] allLoot;   
+        public RectTransform[] spawnPositions;
         public List<GameObject> droppedOutLoot { get; private set; } = new List<GameObject>();
+
+        private Dictionary<GameObject, Subject> descriptionList;
+        private Dictionary<int, ILootGenerationStrategy> generationStrategies;
 
         private void Start()
         {
+            InitializedStrategies();
+            descriptionList = new Dictionary<GameObject, Subject>(0);
+            for (int i = 0; i < allLoot.Length; i++)
+            {
+                descriptionList.Add(allLoot[i], allLoot[i].gameObject.GetComponent<Subject>());
+            }
+
             spawnPositionsIsBusy = new bool[spawnPositions.Length];
+        }
+
+        private void InitializedStrategies()
+        {
+            generationStrategies = new Dictionary<int, ILootGenerationStrategy>
+            {
+                [0] = null,
+                [1] = new AllLootStrategy(),
+                [2] = new ExcludeBigStrategy(),
+                [3] = new ExcludeBigAndAverageStrategy(),
+                [4] = new OnlySmallAndMoreThanSmallStrategy(),
+            };
         }
 
         public void GenarateLoot()
         {
             ClearArray();
+            int countGenarateLoot = CountSpawnLoot();
 
-            int coundGenarateLoot = Random.Range(minGenerateLoot, maxGenerateLoot);
-            Debug.Log(coundGenarateLoot);
+            Dictionary<GameObject, Subject> prop = new Dictionary<GameObject, Subject>();
 
-            for (int i = 0; i < coundGenarateLoot; i++)
+            if (generationStrategies.TryGetValue(countGenarateLoot, out var strategy) && strategy != null)
             {
-                var newObject = Instantiate(AllLoot[Random.Range(0, AllLoot.Length)]);
+                prop = strategy.FilterLoot(descriptionList);
+            }           
+
+            var asList = prop.ToList();
+
+            for (int i = 0; i < countGenarateLoot; i++)
+            {
+                var newObject = Instantiate(asList[Random.Range(0, asList.Count)].Key);
                 droppedOutLoot.Add(newObject);
                 GeneratorIdProp.GenererateIdSubject(newObject);
             }
@@ -48,6 +77,8 @@ namespace MagneticFishing
             }
         }
 
+        private int CountSpawnLoot() => Random.Range(minGenerateLoot, maxGenerateLoot);
+
         private void ClearArray()
         {
             for (int i = 0; i < spawnPositionsIsBusy.Length; i++)
@@ -57,7 +88,7 @@ namespace MagneticFishing
 
             foreach (var obj in spawnPositions)
             {
-                for(int j = 0;j < obj.childCount; j++)
+                for (int j = 0; j < obj.childCount; j++)
                 {
                     Destroy(obj.GetChild(j).gameObject);
                 }

@@ -22,7 +22,7 @@ namespace MagneticFishing
                 }
                 uniqueIdProp.Add(newId);
                 lastGeneratedId = newId;
-                subjectDescription.Id = newId;
+                subjectDescription.description.Id = newId;
             }
         }
 

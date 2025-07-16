@@ -10,11 +10,15 @@ namespace MagneticFishing
         public TextMeshProUGUI cost;
         public Image sprite;
         public Vector3 scale;
+        public SubjectDescription subject;
+
+        private Backpack backpack;
 
         private void Awake()
         {
             scale = transform.localScale;
             transform.localScale = scale;
+            backpack = GameObject.FindFirstObjectByType<Backpack>();
         }
 
         private void OnEnable()
@@ -29,7 +33,9 @@ namespace MagneticFishing
 
         private void DropItems()
         {
+            Debug.Log(subject);
             gameObject.SetActive(false);
+            backpack.DeleteItem(subject);
         }
     }
 }

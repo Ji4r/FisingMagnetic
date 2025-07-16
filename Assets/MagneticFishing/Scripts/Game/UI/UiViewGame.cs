@@ -73,9 +73,9 @@ namespace MagneticFishing
             energyField.fillAmount = currencyEnergy / maxEnergy;
         }
 
-        private void ChangeWindowBackpack(List<Subject> subjects)
+        private void ChangeWindowBackpack(List<SubjectDescription> subjects)
         {
-           foreach (Subject subject in subjects)
+           foreach (SubjectDescription subject in subjects)
            {
                 if (gameObjectsId.Contains(subject.Id))
                     continue;
@@ -84,7 +84,8 @@ namespace MagneticFishing
 
                 gameObjectsId.Add(subject.Id);
                 card.transform.SetParent(parentSlot);
-                //card.transform.localScale = card.scale;
+                Debug.Log(subject + " subject");
+                card.subject = subject;
                 card.cost.text = subject.descriptionOfItem.Price.ToString();
                 card.sprite.sprite = subject.descriptionOfItem.SpriteSubject;
            }

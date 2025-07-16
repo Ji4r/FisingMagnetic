@@ -12,7 +12,7 @@ namespace MagneticFishing
         private ServiceSave serviceSave;
         private SaveOrLoadDataSystem saveOrLoadDataSystem;
         private SettingsGame settings;
-
+        private SaveSystemsDataGame systemSave;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void AutoStart()
@@ -34,14 +34,18 @@ namespace MagneticFishing
             Object.DontDestroyOnLoad(screenLoadView.gameObject);
 
 
-            serviceSave = new GameObject("[ServiceSave]").AddComponent<ServiceSave>();
-            Object.DontDestroyOnLoad(serviceSave.gameObject);
 
             saveOrLoadDataSystem = new GameObject("[SaveSystem]").AddComponent<SaveOrLoadDataSystem>();
             Object.DontDestroyOnLoad(saveOrLoadDataSystem.gameObject);
 
             settings = new GameObject("[SettingsGame]").AddComponent<SettingsGame>();
             Object.DontDestroyOnLoad(settings.gameObject);
+
+            serviceSave = new GameObject("[ServiceSave]").AddComponent<ServiceSave>();
+            Object.DontDestroyOnLoad(serviceSave.gameObject);
+
+            systemSave = new GameObject("[SaveSystem]").AddComponent<SaveSystemsDataGame>();
+            Object.DontDestroyOnLoad(systemSave.gameObject);
         }
 
         private void RunGame()

@@ -6,7 +6,6 @@ namespace MagneticFishing
 {
     public class SaveService : IStorageService
     {
-
         public T Load<T>(string key)
         {
             string path = BuildPath(key);

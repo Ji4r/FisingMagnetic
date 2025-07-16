@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: DoorLock
   m_EditorClassIdentifier: 
   name: "\u0414\u0432\u0435\u0440\u043D\u043E\u0439 \u0437\u0430\u043C\u043E\u043A"
-  description: 
-  weightObject: 0
-  price: 0
-  sprite: {fileID: 8388871284015262990, guid: e9648e88aa6d1dd4193a39f87cf39fb9, type: 3}
-  prefab: {fileID: 0}
+  description: "\u0417\u0430\u043C\u043E\u0447\u0438\u043A \u043E\u0442 \u043C\u043E\u0435\u0433\u043E
+    \u0441\u0435\u0440\u0434\u0446\u0430\n"
+  weightObject: 0.4
+  price: 15
+  sprite: {fileID: 21300000, guid: e9648e88aa6d1dd4193a39f87cf39fb9, type: 3}
+  size: 1
+  prefab: {fileID: 2577393936381799232, guid: d6b9a9d4d54c550478aa6c42fe3f33e0, type: 3}

@@ -47,9 +47,9 @@ namespace MagneticFishing
                 if (clickedObject.TryGetComponent<Subject>(out var subject))
                 {
                     selectedItem = subject;
-                    nameSubject.text = subject.descriptionOfItem.Name;
-                    descriptionSubject.text = subject.descriptionOfItem.Description;
-                    spriteSubject.sprite = subject.descriptionOfItem.SpriteSubject;
+                    nameSubject.text = subject.description.descriptionOfItem.Name;
+                    descriptionSubject.text = subject.description.descriptionOfItem.Description;
+                    spriteSubject.sprite = subject.description.descriptionOfItem.SpriteSubject;
                     panelTake.TogglePanel(true);
                 }
             }
@@ -60,7 +60,7 @@ namespace MagneticFishing
             if (selectedItem != null)
                 Destroy(selectedItem.gameObject);
             panelTake.TogglePanel(false);
-            GeneratorIdProp.ReleaseId(selectedItem.Id);
+            GeneratorIdProp.ReleaseId(selectedItem.description.Id);
             DeleteProp();
         }
 
@@ -70,16 +70,18 @@ namespace MagneticFishing
             if (selectedItem == null)
             { return; }
 
-            backpack.AddItamInBackpack(selectedItem);
+            backpack.AddItemInBackpack(selectedItem.description);
             EventBusGame.ChangeUiCountSlots?.Invoke(backpack.listItems.Count, backpack.capacityBackpack);
-            Destroy(selectedItem.gameObject);
+            selectedItem.gameObject.SetActive(false);
             DeleteProp();
         }
 
         public void DeleteProp()
         {
             if (!lootGenerator.DeleteItemFromArray())
+            {
                 EventBusGame.ClouseLootWindow?.Invoke();
+            }
         }
     }
 }

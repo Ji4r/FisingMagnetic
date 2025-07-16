@@ -1,4 +1,3 @@
-using Unity.Collections;
 using UnityEngine;
 
 namespace MagneticFishing
@@ -11,17 +10,37 @@ namespace MagneticFishing
         {
             _locator = new ServiceLocator<IService>();
 
-            var dataSetting = new DataSettings();
-            var dataGame = new DataGame(10,45);
+            var saveSystem = new SaveOrLoadDataSystem();
 
-            _locator.Register(dataSetting);
+            DataSettings dataSettings;
+            if (saveSystem.ChekingFile(typeof(DataSettings)))
+            {
+                dataSettings = saveSystem.Load<DataSettings>();
+            }
+            else
+            {
+                dataSettings = new DataSettings();
+                saveSystem.Save(dataSettings);
+            }
+
+            DataGame dataGame;
+            if (saveSystem.ChekingFile(typeof(DataGame)))
+            {
+                dataGame = saveSystem.Load<DataGame>();
+            }
+            else
+            {
+                dataGame = new DataGame();
+                saveSystem.Save(dataGame);
+            }
+
+            // 4. Регистрируем сервисы
+            _locator.Register(dataSettings);
             _locator.Register(dataGame);
         }
 
         private void OnDisable()
         {
-            //locator.Unregister<DataGame>();
-            //locator.Unregister(new DataSettings());
         }
     }
 }

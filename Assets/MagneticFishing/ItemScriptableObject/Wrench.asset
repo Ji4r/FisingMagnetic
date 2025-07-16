@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1d7ea9b5dd0354592d4778148d24c4, type: 3}
+  m_Name: Wrench
+  m_EditorClassIdentifier: 
+  name: "\u0413\u0430\u0438\u0447\u043D\u044B\u0439 \u043A\u043B\u044E\u0447"
+  description: "\u0427\u0442\u043E \u043E\u043D \u0442\u0443\u0442 \u0437\u0430\u0431\u044B\u043B?"
+  weightObject: 0.4
+  price: 30
+  sprite: {fileID: 21300000, guid: 3d06d3cbdc711f84d8b0df874ec655ac, type: 3}
+  size: 1
+  prefab: {fileID: 3782405552297579730, guid: 7754c91b719713249904215fcfbd69c7, type: 3}
